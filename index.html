@@ -84,7 +84,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="(item,index) in survey_data.history">
+        <tr v-for="(item,index) in survey_data.history"
+            v-bind:style="{color: item.status?'green':'red' }">
             <th v-if="item.status==1">
                 <i class="bi bi-check-circle text-success status-icon"></i>
                 <br>
@@ -111,6 +112,7 @@
     var app = new Vue({
         el: '#app',
         data: {
+            test: true,
             table_head: [
                 "Status",
                 "ID",
