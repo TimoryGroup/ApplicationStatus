@@ -140,8 +140,8 @@
                 D = date.getDate() + ' ';
                 h = (date.getHours() < 10 ? '0' + (date.getHours()) : date.getHours()) + ':';
                 m = (date.getMinutes() < 10 ? '0' + (date.getMinutes()) : date.getMinutes()) + ':';
-                s = date.getSeconds();
-                return Y + M + D + h + m + s
+                s = (date.getSeconds() < 10 ? '0' + (date.getSeconds()) : date.getSeconds());
+                return Y + M + D + h + m + s;
             }
         }
     })
