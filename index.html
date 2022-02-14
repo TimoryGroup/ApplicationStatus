@@ -96,7 +96,12 @@
                 <br>
                 <span class="text-danger">REJECTED</span>
             </th>
-
+            <th v-if="item.status==-1">
+                <i class="bi bi-exclamation-triangle text-warning status-icon"></i>
+                <br>
+                <span v-if="item.r_remark" class="text-dark">{{item.r_remark}}</span>
+                <span v-else class="text-warning">ABORTED</span>
+            </th>
             <th>{{item.sid}}</th>
             <th>{{item.mcid}}</th>
             <th>{{convertTimeStamp(item.survey_end_timestamp)}}</th>
