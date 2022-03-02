@@ -61,10 +61,12 @@
         <tr v-for="(item,index) in survey_data.pending" v-bind:style="{color: item.r_remark?'black':'blue','background-color': item.r_remark?'rgba(220,190,60,0.2)':'rgba(105,179,222,0.2)' }">
             <th>
                 <!--切换显示图标-->
-                <i v-if="item.r_remark" class="bi bi-exclamation-triangle text-warning status-icon"></i>
+                <i v-if="item.r_remark" class="bi bi-exclamation-circle text-warning status-icon"></i>
+                <i v-else-if="item.pushed==1" class="bi bi-chat-right-dots text-warning status-icon"></i>
                 <i v-else class="bi bi-clock-history text-info status-icon"></i>
                 <br>
                 <span v-if="item.r_remark" class="text-dark">{{item.r_remark}}</span>
+                <span v-else-if="item.pushed==1" class="text-dark">UNDER REVIEW</span>
                 <span v-else class="text-dark">PENDING</span>
             </th>
             <th>{{item.sid}}</th>
@@ -85,7 +87,8 @@
         </thead>
         <tbody>
         <tr v-for="(item,index) in survey_data.history"
-            v-bind:style="{color: item.status?'green':'red','background-color': item.status?'rgba(200,255,200,0.3)':'rgba(255,200,200,0.3)' }">
+            v-bind:style="{color: item.status?'green':'red',
+            'background-color': item.status?'rgba(200,255,200,0.3)':'rgba(255,200,200,0.3)' }">
             <th v-if="item.status==1">
                 <i class="bi bi-check-circle text-success status-icon"></i>
                 <br>
@@ -110,7 +113,7 @@
         </tbody>
     </table>
 
-    TimoryGroup@2016~2077. All Right Reserved.
+    TimoryGroup @2016~2077. All Right Reserved.
 </div>
 </body>
 <script>
