@@ -13,6 +13,42 @@
         .status-icon {
             font-size: 2rem;
         }
+
+        .approvedBg {
+            background-color: rgba(200, 255, 200, 0.2);
+        }
+
+        .rejectedBg {
+            background-color: rgba(255, 200, 200, 0.2);
+        }
+
+        .errorBg {
+            background-color: rgba(255, 193, 7, 0.1);
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted black;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+
+            /* 定位 */
+            position: absolute;
+            z-index: 1;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+        }
     </style>
 </head>
 <body>
@@ -58,7 +94,9 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="(item,index) in survey_data.pending" v-bind:style="{color: item.r_remark?'black':'blue','background-color': item.r_remark?'rgba(220,190,60,0.2)':'rgba(105,179,222,0.2)' }">
+        <tr v-for="(item,index) in survey_data.pending"
+            v-bind:style="{color: item.r_remark?'black':'blue',
+            'background-color': item.r_remark?'rgba(220,190,60,0.2)':'rgba(105,179,222,0.2)' }">
             <th>
                 <!--切换显示图标-->
                 <i v-if="item.r_remark" class="bi bi-exclamation-circle text-warning status-icon"></i>
@@ -87,8 +125,9 @@
         </thead>
         <tbody>
         <tr v-for="(item,index) in survey_data.history"
-            v-bind:style="{color: item.status?'green':'red',
-            'background-color': item.status?'rgba(200,255,200,0.3)':'rgba(255,200,200,0.3)' }">
+            v-bind:style="{color: item.status?'green':'red'}"
+            v-bind:class="{approvedBg:item.status==1,rejectedBg:item.status==0,errorBg:item.status==-1}">
+
             <th v-if="item.status==1">
                 <i class="bi bi-check-circle text-success status-icon"></i>
                 <br>
@@ -101,9 +140,16 @@
             </th>
             <th v-if="item.status==-1">
                 <i class="bi bi-exclamation-triangle text-warning status-icon"></i>
+
+                <div class="tooltip">
+                    <span>鼠标移动到这</span>
+                    <span class="tooltiptext"> {{item.r_remark}} </span>
+                </div>
+
                 <br>
-                <span v-if="item.r_remark" class="text-dark">{{item.r_remark}}</span>
-                <span v-else class="text-warning">ABORTED</span>
+                <!--                <span v-if="item.r_remark" class="text-dark">{{item.r_remark}}</span>
+                                <span v-else class="text-warning">ABORTED</span>-->
+                <span class="text-warning">ABORTED</span>
             </th>
             <th>{{item.sid}}</th>
             <th>{{item.mcid}}</th>
@@ -120,7 +166,6 @@
     var app = new Vue({
         el: '#app',
         data: {
-            test: true,
             table_head: [
                 "Status",
                 "ID",
@@ -141,6 +186,8 @@
                 });
         },
         methods: {
+
+
             convertTimeStamp: function (timestamp) {
                 var date = new Date(timestamp * 1000);
                 Y = date.getFullYear() + '-';
